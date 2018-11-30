@@ -1,2 +1,2 @@
 # UEK_DataWarehouse
-College data warehouse project
+College project: data warehouse
