@@ -1,6 +1,7 @@
 import mysql.connector
 
 import config
+from helpers import *
 
 
 class DatabaseConnection(object):
@@ -50,3 +51,6 @@ class DatabaseConnection(object):
             self.__cursor.execute(query_temp)
         self.__db_connection.commit()
         self.__disconnect()
+
+# ======================================================================================================================
+
