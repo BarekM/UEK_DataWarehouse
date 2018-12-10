@@ -1,7 +1,7 @@
 import mysql.connector
 
 import config
-from helpers import *
+# from helpers import *
 
 
 class DatabaseConnection(object):
@@ -52,5 +52,11 @@ class DatabaseConnection(object):
         self.__db_connection.commit()
         self.__disconnect()
 
-# ======================================================================================================================
+    def __del__(self):
+        try:
+            self.__disconnect()
+        except ImportError:
+            pass
 
+
+# ======================================================================================================================
