@@ -1,5 +1,5 @@
 import modules.load
-from modules.load import DatabaseConnection, load_files, output_db
+from modules.load import load_files, output_db, clear_db
 from modules.helpers import write_json
 import config
 
@@ -12,7 +12,6 @@ import glob
 # for idx in range(0,10):
 #     myDict = {
 #         'id': idx,
-#         'name': 'xD',
 #         'type': 'pokoj',
 #         'city': 'Krakow',
 #         'price': '11111',
@@ -25,9 +24,11 @@ import glob
 #         'date_added': str(datetime.datetime.utcnow())
 #     }
 #     write_json('{0}\\{1}.json'.format(config.path_transformed, idx), myDict)
-#
-# dbc = DatabaseConnection()
-# dbc.clear_database()
-# load_files()
-output_db()
+
+
+load_files()
+print(output_db())
+clear_db()
+
+
 
