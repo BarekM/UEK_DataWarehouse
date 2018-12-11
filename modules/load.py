@@ -1,5 +1,6 @@
 import glob
 import csv
+import datetime
 
 import mysql.connector
 
@@ -7,7 +8,7 @@ import config
 from modules.helpers import read_json, dict_to_string
 
 
-class DatabaseConnection(object):
+class _DatabaseConnection(object):
 
     def __connect(self):
         self.__db_connection = mysql.connector.connect(user=self.__db_user,
@@ -79,7 +80,7 @@ def load_files():
         count_success = 0
         count_try = 0
         count_duplicate = 0
-        db_con = DatabaseConnection()
+        db_con = _DatabaseConnection()
         # build files list to be loaded
         files_list = glob.glob('{0}\\*.json'.format(config.path_transformed))
         for path_file in files_list:
@@ -99,23 +100,45 @@ def load_files():
         exit_code = 1
         message = str(e)
     status = (exit_code, message)
-    print(status)
     return status
 
 
 def output_db():
-    dbc = DatabaseConnection()
-    query1 = "SELECT column_name FROM information_schema.columns WHERE table_name = 'tbl_main'"
-    query2 = "SELECT * FROM tbl_main"
-    column_names = dbc.select(query1)
-    results = dbc.select(query2)
+    try:
+        dbc = _DatabaseConnection()
+        query1 = "SELECT column_name FROM information_schema.columns WHERE table_name = 'tbl_main'"
+        query2 = "SELECT * FROM tbl_main"
+        column_names = dbc.select(query1)
+        results = dbc.select(query2)
 
-    lst_column_names = [str(y) for y in [x[0] for x in column_names]]
-    output_to_csv = [tuple(lst_column_names)] + results
+        lst_column_names = [str(y) for y in [x[0] for x in column_names]]
+        output_to_csv = [tuple(lst_column_names)] + results
 
-    with open('{0}\\out.csv'.format(config.path_print), 'w', newline='') as c:
-        writer = csv.writer(c)
-        writer.writerows(output_to_csv)
+        path_output = '{0}\\db_output_{1}.csv'.format(config.path_print, datetime.datetime.now().strftime('%Y%m%d_%H%M%S'))
+        with open(path_output, 'w', newline='') as c:
+            writer = csv.writer(c)
+            writer.writerows(output_to_csv)
+        exit_code = 0
+        message = 'Output generated: {0}'.format(path_output)
+    except Exception as e:
+        message = str(e)
+        exit_code = 1
+    status = (exit_code, message)
+    return status
+
+
+def clear_db():
+    try:
+        dbc = _DatabaseConnection()
+        dbc.clear_database()
+        exit_code = 0
+        message = 'Database cleared'
+    except Exception as e:
+        exit_code = 1
+        message = str(e)
+    status = (exit_code, message)
+    return status
+
 
 
 
