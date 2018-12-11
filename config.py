@@ -11,15 +11,15 @@ db_name = 'dev_uek_dw'
 
 dict_city = {
   'warszawa': 'v1c2l3200008p',
-	'krakow': 'v1c9008l3200208p',
-	'wroclaw': 'v1c9008l3200114p',
-	'gdansk': 'v1c9008l3200072p',
-	'lublin': 'v1c9008l3200145p',
-	'poznan': 'v1c9008l3200366p',
-	'lodz': 'v1c9008l3200183p',
-	'katowice': 'v1c9008l3200285p',
-	'rzeszow': 'v1c9008l3200252p',
-	'szczecin': 'v1c9008l3200402p',
+  'krakow': 'v1c9008l3200208p',
+  'wroclaw': 'v1c9008l3200114p',
+  'gdansk': 'v1c9008l3200072p',
+  'lublin': 'v1c9008l3200145p',
+  'poznan': 'v1c9008l3200366p',
+  'lodz': 'v1c9008l3200183p',
+  'katowice': 'v1c9008l3200285p',
+  'rzeszow': 'v1c9008l3200252p',
+  'szczecin': 'v1c9008l3200402p',
 }
 
 pages_limit = '10'
