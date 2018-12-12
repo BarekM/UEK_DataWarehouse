@@ -3,3 +3,4 @@ pyqt5
 bs4
 requests
 lxml
+openpyxl

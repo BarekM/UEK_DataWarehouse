@@ -151,10 +151,7 @@ def output_files():
         for r in results:
             dict_current_file = {}
             for x in range(0, len(lst_column_names)):
-                if lst_column_names[x] == 'date':
-                    dict_current_file[lst_column_names[x]] = r[x].strftime('%Y%m%d_%H%M%S')
-                else:
-                    dict_current_file[lst_column_names[x]] = r[x]
+                dict_current_file[lst_column_names[x]] = r[x]
             path_json = '{0}\\{1}.json'.format(config.path_print_files, dict_current_file['id'])
             write_pretty_json(path_json, dict_current_file)
             counter_files += 1
@@ -163,6 +160,7 @@ def output_files():
     except Exception as e:
         exit_code = 1
         message = str(e)
+        print(message)
     status = (exit_code, message)
     return status
 
