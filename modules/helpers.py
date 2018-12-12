@@ -9,6 +9,7 @@ def get_filename(path):
     file_name = path.split('\\')[-1]
     return file_name
 
+
 def read_json(path):
     with open(file=path, mode='r', encoding='ASCII', errors='ignore') as f:
         body = json.load(f)
@@ -34,8 +35,10 @@ def dict_to_string(my_dict):
 def clear_directory(path_dir):
     files_list = glob.glob('{0}\\*'.format(path_dir))
     for file in files_list:
-        os.remove(file)
-
+        try:
+            os.remove(file)
+        except PermissionError:
+            pass
 
 def clear_temp_directories():
     clear_directory(config.path_scraped)

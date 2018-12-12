@@ -15,6 +15,7 @@ import config
 class MyException(Exception):
     pass
 
+
 class ETL():
     def __init__(self):
         pass
@@ -53,6 +54,7 @@ class GuiWebScraper(QWidget):
     def __init__(self, app):
         super().__init__()
 
+        clear_temp_directories()
         self.app = app
         self.initUI()
         self.etl = ETL()
@@ -97,8 +99,8 @@ class GuiWebScraper(QWidget):
         self.button_clear = QPushButton('Clear')
         self.button_clear.clicked.connect(self.clear)
 
-        button_file = QPushButton('File')
-        button_file.clicked.connect(self.file)
+        self.button_file = QPushButton('File')
+        self.button_file.clicked.connect(self.file)
 
         # przestrzen do wyswietlenia danych
         self.label_text = QLabel()
@@ -113,8 +115,8 @@ class GuiWebScraper(QWidget):
         vbox.addWidget(self.button_load)
         vbox.addWidget(self.button_print)
         vbox.addWidget(self.button_print_files)
+        vbox.addWidget(self.button_file)
         vbox.addWidget(self.button_clear)
-        # vbox.addWidget(button_file)
         vbox.addWidget(self.label_text)
 
         # buduj slownik ze statusami przyciskow
@@ -136,7 +138,7 @@ class GuiWebScraper(QWidget):
             self.button_etl,
             self.button_clear,
             self.button_load,
-            self.button_print_files
+            self.button_print_files,
         ]
 
         # wyswietlenie obiektu vbox w oknie
