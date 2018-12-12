@@ -3,6 +3,7 @@ path_scraped = '{0}\\{1}'.format(path_temp, 'extracted')
 path_transformed = '{0}\\{1}'.format(path_temp, 'transformed')
 path_processed = '{0}\\{1}'.format(path_temp, 'processed')
 path_print = '{0}\\{1}'.format(path_temp, 'output')
+path_print_files = '{0}\\{1}'.format(path_temp, 'output\\files')
 
 db_user = 'crawler'
 db_password = 'admin'
