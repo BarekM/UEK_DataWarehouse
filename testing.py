@@ -1,5 +1,7 @@
 import modules.load
 from modules.load import load_files, output_db, clear_db, output_files
+from modules.extract import data_scrape
+from modules.transform import data_transform
 from modules.helpers import write_json, read_json
 import config
 
@@ -7,6 +9,8 @@ import datetime
 
 import glob
 
+#data_scrape('Warszawa')
+data_transform()
 
 
 # path = 'xD.json'
@@ -39,5 +43,5 @@ import glob
 # clear_db()
 
 
-output_files()
+# output_files()
 

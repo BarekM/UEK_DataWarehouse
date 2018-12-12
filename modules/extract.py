@@ -2,22 +2,26 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import config
-
+from modules.helpers import write_json, add_to_dict
 
 def data_scrape(city):
-    
     try:
         
+        offer_counter = 0
         page_counter = 0
         current_page = ''
         previous_page = ''
-        
-        for page in range(1, config.pages_limit):
+        if config.pages_limit == 0:
+            page_limit = 5000
+        else:
+            page_limit = config.pages_limit
+
+        for page in range(1, page_limit + 1):
        
             url = 'https://www.gumtree.pl/s-mieszkania-i-domy-do-wynajecia/' + city + '/page-' + str(page) + '/' + config.dict_city[city] + str(page)
             page_response = requests.get(url)
             page_content = BeautifulSoup(page_response.content, 'lxml')
-        
+
             current_page = page_content.find('span', class_ = 'current').text.strip()
           
             if current_page != previous_page:
@@ -39,23 +43,26 @@ def data_scrape(city):
                     for detail in details:
                         detail_name = detail.find('span', class_ = 'name').text.strip()
                         detail_value = detail.find('span', class_ = 'value').text.strip()
-                        
-                        single_page_dict[detail_name] = detail_value
-                       
-                    with open(config.path_scraped + '\\' + unique_id + '.json', 'a', encoding = 'utf-8') as text_file:
-                        text_file.write(json.dumps(single_page_dict, ensure_ascii = False))
-                        
+                        if detail_name == 'Lokalizacja':
+                            detail_value = city
+                        add_to_dict(detail_name, detail_value, single_page_dict)
+
+                    write_json(config.path_scraped + '\\' + unique_id + '.json',single_page_dict)
+                    offer_counter += 1
+
                 previous_page = current_page
                 page_counter += 1
-                
-            else: break
+
+            else:
+                break
         
-        message = '{0} out of {1} pages extracted.'.format(page_counter, config.pages_limit)
+        message = '{0} offers from {1} page(s) extracted.'.format(offer_counter, page_counter)
         exit_code = 0
-    
+
     except Exception as e:
         exit_code = 1
         message = str(e)
-        
+
     status = (exit_code, message)
+    print(status)
     return status

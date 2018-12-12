@@ -1,11 +1,12 @@
 import glob
 import csv
 import datetime
+import shutil
 
 import mysql.connector
 
 import config
-from modules.helpers import read_json, dict_to_string, write_pretty_json, write_json
+from modules.helpers import read_json, dict_to_string, write_pretty_json, get_filename
 
 
 class _DatabaseConnection(object):
@@ -32,7 +33,7 @@ class _DatabaseConnection(object):
         self.__cursor.execute(query)
         query_results = self.__cursor.fetchall()
         # self.__disconnect()
-        print("Query executed: Select")
+        # print("Query executed: Select")
         return query_results
 
     def input_one(self, query):
@@ -40,14 +41,14 @@ class _DatabaseConnection(object):
         self.__cursor.execute(query)
         self.__db_connection.commit()
         # self.__disconnect()
-        print("Query executed: Insert one")
+        # print("Query executed: Insert one")
 
     def input_all(self, query):
         # self.__connect()
         self.__cursor.executemany(query)
         self.__db_connection.commit()
         # self.__disconnect()
-        print("Query executed: Insert all")
+        # print("Query executed: Insert all")
 
     def clear_database(self):
         # self.__connect()
@@ -64,7 +65,7 @@ class _DatabaseConnection(object):
         self.__cursor.execute(query)
         self.__db_connection.commit()
         # self.__disconnect()
-        print("Query executed: Clear DB")
+        # print("Query executed: Clear DB")
 
     def __del__(self):
         try:
@@ -91,11 +92,18 @@ def load_files():
             try:
                 db_con.input_one(query)
                 count_success += 1
+                # move file to processed
+                path_destination = '{0}\\{1}'.format(config.path_processed, get_filename(path_file))
+                shutil.move(path_file, path_destination)
             except Exception as e:
                 if 'Duplicate entry' in str(e):
                     count_duplicate += 1
+                else:
+                    print(str(e))
+                    path_destination = '{0}\\{1}'.format(config.path_errors, get_filename(path_file))
+                    shutil.move(path_file, path_destination)
             count_try += 1
-            message = 'Uploaded {0} out of {1}. Duplicates found: {2}'.format(count_success, count_try, count_duplicate)
+        message = 'Uploaded {0} out of {1}. Duplicates found: {2}'.format(count_success, count_try, count_duplicate)
         exit_code = 0
     except Exception as e:
         exit_code = 1
