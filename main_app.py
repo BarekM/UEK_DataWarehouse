@@ -5,6 +5,8 @@ import time
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QComboBox
 
 
+from modules.extract import data_scrape
+from modules.transform import data_transform
 from modules.load import load_files, output_db, output_files, clear_db
 from modules.helpers import clear_directory, clear_temp_directories
 import config
@@ -18,12 +20,12 @@ class ETL():
         pass
 
     def extract(self, city_name):
-        city_name = city_name.lower()
-        output_method = (0, "xDe")
+        city_name = city_name
+        output_method = data_scrape(city_name)
         return output_method
 
     def transform(self):
-        output_method = (0, "xDt")
+        output_method = data_transform()
         return output_method
 
     def load(self):
@@ -176,18 +178,6 @@ class GuiWebScraper(QWidget):
             self.label_text.setText(str(e))
         self.refresh_buttons(False)
 
-    def load(self):
-        try:
-            self.label_text.setText("Loading started")
-            self.refresh_buttons(True)
-            f_output = self.etl.load()
-            self.handle_f_output(f_output)
-            self.dict_buttons_status['Load'] = False
-            clear_directory(config.path_transformed)
-        except Exception as e:
-            self.label_text.setText(str(e))
-        self.refresh_buttons(False)
-
     def transform(self):
         try:
             self.label_text.setText("Transformation started")
@@ -197,6 +187,18 @@ class GuiWebScraper(QWidget):
             self.dict_buttons_status['Load'] = True
             self.dict_buttons_status['Transform'] = False
             clear_directory(config.path_scraped)
+        except Exception as e:
+            self.label_text.setText(str(e))
+        self.refresh_buttons(False)
+
+    def load(self):
+        try:
+            self.label_text.setText("Loading started")
+            self.refresh_buttons(True)
+            f_output = self.etl.load()
+            self.handle_f_output(f_output)
+            self.dict_buttons_status['Load'] = False
+            clear_directory(config.path_transformed)
         except Exception as e:
             self.label_text.setText(str(e))
         self.refresh_buttons(False)
