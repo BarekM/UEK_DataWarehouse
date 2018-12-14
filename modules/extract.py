@@ -64,5 +64,4 @@ def data_scrape(city):
         message = str(e)
 
     status = (exit_code, message)
-    print(status)
     return status
