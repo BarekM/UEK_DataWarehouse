@@ -163,7 +163,7 @@ class GuiWebScraper(QWidget):
 
     def extract(self):
         try:
-            self.label_text.setText("Extraction started")
+            self.label_text.setText("Extraction started.")
             clear_temp_directories()
             self.refresh_buttons(True)
             f_output = self.etl.extract(self.combobox_city.currentText())

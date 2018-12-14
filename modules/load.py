@@ -84,7 +84,7 @@ def load_files():
         exit_code = 1
         message = str(e)
     if not message:
-        message = 'No records to be uploaded'
+        message = 'No records to be uploaded.'
     status = (exit_code, message)
     return status
 
