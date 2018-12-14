@@ -1,5 +1,4 @@
 import sys
-import time
 
 
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QComboBox
@@ -44,9 +43,6 @@ class ETL():
     def clear(self):
         output_method = clear_db()
         return output_method
-
-    def file(self):
-        print("file clicked")
 
 
 class GuiWebScraper(QWidget):
@@ -99,9 +95,6 @@ class GuiWebScraper(QWidget):
         self.button_clear = QPushButton('Clear')
         self.button_clear.clicked.connect(self.clear)
 
-        self.button_file = QPushButton('File')
-        self.button_file.clicked.connect(self.file)
-
         # przestrzen do wyswietlenia danych
         self.label_text = QLabel()
         self.label_text.setText("wyprintowanie informacji statystycznych")
@@ -115,7 +108,6 @@ class GuiWebScraper(QWidget):
         vbox.addWidget(self.button_load)
         vbox.addWidget(self.button_print)
         vbox.addWidget(self.button_print_files)
-        vbox.addWidget(self.button_file)
         vbox.addWidget(self.button_clear)
         vbox.addWidget(self.label_text)
 
@@ -127,7 +119,7 @@ class GuiWebScraper(QWidget):
             self.button_extract.text(): True,
             self.button_transform.text(): False,
             self.button_print.text(): True,
-            self.button_print_files.text(): True
+            self.button_print_files.text(): True,
         }
 
         # buduj liste przyciskow
@@ -232,13 +224,6 @@ class GuiWebScraper(QWidget):
             f_output = self.etl.clear()
             self.handle_f_output(f_output)
             clear_temp_directories()
-        except Exception as e:
-            self.label_text.setText(str(e))
-        self.refresh_buttons(False)
-
-    def file(self):
-        try:
-            self.etl.file()
         except Exception as e:
             self.label_text.setText(str(e))
         self.refresh_buttons(False)
