@@ -29,13 +29,19 @@ class _DatabaseConnection(object):
         self.__connect()
 
     def select(self, query):
+        # self.__connect()
         self.__cursor.execute(query)
         query_results = self.__cursor.fetchall()
+        # self.__disconnect()
+        # print("Query executed: Select")
         return query_results
 
     def input_one(self, query):
+        # self.__connect()
         self.__cursor.execute(query)
         self.__db_connection.commit()
+        # self.__disconnect()
+        # print("Query executed: Insert one")
 
     def clear_database(self):
         query = 'TRUNCATE table tbl_main'
