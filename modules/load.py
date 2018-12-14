@@ -43,29 +43,10 @@ class _DatabaseConnection(object):
         # self.__disconnect()
         # print("Query executed: Insert one")
 
-    def input_all(self, query):
-        # self.__connect()
-        self.__cursor.executemany(query)
-        self.__db_connection.commit()
-        # self.__disconnect()
-        # print("Query executed: Insert all")
-
     def clear_database(self):
-        # self.__connect()
-        # query = 'SHOW TABLES'
-        # self.__cursor.execute(query)
-        # query_result = self.__cursor.fetchall()
-        # for result in query_result:
-        #     query_temp = 'DELETE FROM {0}'.format(result)
-        #     self.__cursor.execute(query_temp)
-        # self.__db_connection.commit()
-        # self.__disconnect()
-        # self.__connect()
         query = 'TRUNCATE table tbl_main'
         self.__cursor.execute(query)
         self.__db_connection.commit()
-        # self.__disconnect()
-        # print("Query executed: Clear DB")
 
     def __del__(self):
         try:
