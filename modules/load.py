@@ -145,7 +145,7 @@ def clear_db():
         dbc = _DatabaseConnection()
         dbc.clear_database()
         exit_code = 0
-        message = 'Database cleared'
+        message = 'Database cleared.'
     except Exception as e:
         exit_code = 1
         message = str(e)

@@ -176,7 +176,7 @@ class GuiWebScraper(QWidget):
 
     def transform(self):
         try:
-            self.label_text.setText("Transformation started")
+            self.label_text.setText("Transformation started.")
             self.refresh_buttons(True)
             f_output = self.etl.transform()
             self.handle_f_output(f_output)
