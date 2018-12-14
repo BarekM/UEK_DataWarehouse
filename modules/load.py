@@ -29,19 +29,13 @@ class _DatabaseConnection(object):
         self.__connect()
 
     def select(self, query):
-        # self.__connect()
         self.__cursor.execute(query)
         query_results = self.__cursor.fetchall()
-        # self.__disconnect()
-        # print("Query executed: Select")
         return query_results
 
     def input_one(self, query):
-        # self.__connect()
         self.__cursor.execute(query)
         self.__db_connection.commit()
-        # self.__disconnect()
-        # print("Query executed: Insert one")
 
     def clear_database(self):
         query = 'TRUNCATE table tbl_main'
@@ -80,7 +74,6 @@ def load_files():
                 if 'Duplicate entry' in str(e):
                     count_duplicate += 1
                 else:
-                    print(str(e))
                     path_destination = '{0}\\{1}'.format(config.path_errors, get_filename(path_file))
                     shutil.move(path_file, path_destination)
             count_try += 1
@@ -141,7 +134,6 @@ def output_files():
     except Exception as e:
         exit_code = 1
         message = str(e)
-        print(message)
     status = (exit_code, message)
     return status
 

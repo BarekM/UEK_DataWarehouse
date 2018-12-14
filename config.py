@@ -24,4 +24,4 @@ dict_city = {
   'Szczecin': 'v1c9008l3200402p',
 }
 
-pages_limit = 1
+pages_limit = 15

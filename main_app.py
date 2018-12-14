@@ -69,7 +69,7 @@ class GuiWebScraper(QWidget):
         self.combobox_city.addItem("Rzeszow")
         self.combobox_city.addItem("Lublin")
         self.combobox_city.addItem("Lodz")
-        self.combobox_city.addItem("Wroclaw")
+        self.combobox_city.addItem("Krakow")
         self.combobox_city.addItem("Poznan")
         self.combobox_city.addItem("Szczecin")
 
