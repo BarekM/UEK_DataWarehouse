@@ -90,7 +90,7 @@ def load_files():
         exit_code = 1
         message = str(e)
     if not message:
-        message = 'No records to be uploaded'
+        message = 'No records to be uploaded.'
     status = (exit_code, message)
     return status
 
@@ -151,7 +151,7 @@ def clear_db():
         dbc = _DatabaseConnection()
         dbc.clear_database()
         exit_code = 0
-        message = 'Database cleared'
+        message = 'Database cleared.'
     except Exception as e:
         exit_code = 1
         message = str(e)

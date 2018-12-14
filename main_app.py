@@ -163,7 +163,8 @@ class GuiWebScraper(QWidget):
 
     def extract(self):
         try:
-            self.label_text.setText("Extraction started")
+            self.label_text.setText("Extraction started.")
+            clear_temp_directories()
             self.refresh_buttons(True)
             f_output = self.etl.extract(self.combobox_city.currentText())
             self.handle_f_output(f_output)
@@ -174,7 +175,7 @@ class GuiWebScraper(QWidget):
 
     def transform(self):
         try:
-            self.label_text.setText("Transformation started")
+            self.label_text.setText("Transformation started.")
             self.refresh_buttons(True)
             f_output = self.etl.transform()
             self.handle_f_output(f_output)
