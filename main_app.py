@@ -1,14 +1,12 @@
 import sys
 
-
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QComboBox
 
-
+import config
 from modules.extract import data_scrape
 from modules.transform import data_transform
-from modules.load import load_files, output_db, output_files, clear_db
 from modules.helpers import clear_directory, clear_temp_directories
-import config
+from modules.load import load_files, output_db, output_files, clear_db
 
 
 class MyException(Exception):
@@ -139,9 +137,12 @@ class GuiWebScraper(QWidget):
         self.refresh_buttons(False)
 
     def etl(self):
-        self.extract()
-        self.transform()
-        self.load()
+        try:
+            self.extract()
+            self.transform()
+            self.load()
+        except:
+            self.label_text.setText('ETL encountered error')
 
     def handle_f_output(self, function_output):
         exit_code = function_output[0]
